@@ -1,0 +1,340 @@
+{
+	"info": {
+		"_postman_id": "0556cb82-294f-44fb-bc8e-cd7fe3e743cc",
+		"name": "语音合成系统测试",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "注册账号发送验证码",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"phoneNumber\": \"18893609926\",\r\n    \"deviceId\": \"apple\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/user/register/v2/getToken/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"register",
+						"v2",
+						"getToken",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "用户注册",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"fanzhixing\",\r\n    \"deviceId\": \"apple\",\r\n    \"phoneNumber\": \"18893609926\",\r\n    \"passWordMD5Hash\": \"123456\",\r\n    \"smsToken\": 321248\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/user/register/v2/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"register",
+						"v2",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "用户登录",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var userId = \"6972c67b251ce518\";\r",
+							"var deviceId= \"apple\";\r",
+							"var token = \"1fe82d9934cd0a089cecfeb61d21e91f7a031021\";\r",
+							"// 导入JS库：时间库moment，加密库CryptoJS\r",
+							"const moment = require('moment');\r",
+							"var CryptoJS = require(\"crypto-js\");\r",
+							"// 确定时间戳（以秒为单位的10位整数串，一并发送到请求body中）\r",
+							"var time = moment();\r",
+							"var timeStampStr = parseInt(time.valueOf()/1000).toString();\r",
+							"// 确定计算HMAC-SHA1签名的参数\r",
+							"var userIdHash = CryptoJS.MD5(userId).toString(CryptoJS.enc.Hex);\r",
+							"var key = token.substring(0,6) + userIdHash.substring(0,6);\r",
+							"// 计算签名，密钥为appKey，信息为appId+timeStampStr\r",
+							"var msg = token + timeStampStr\r",
+							"var signature = CryptoJS.HmacSHA1(msg,key).toString(CryptoJS.enc.Hex);\r",
+							"// 将签名传递到请求body\r",
+							"var authToken = userId+\";\"+deviceId+\";\"+token+\";\"+timeStampStr+\";\"+signature;\r",
+							"pm.globals.set(\"authToken\",authToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"phoneNumber\":\"18893609926\",\r\n    \"userSidePasswordHash\":\"123456\",\r\n    \"deviceId\":\"apple\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/user/login/password/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"login",
+						"password",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "创建合成记录",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var userId = \"97f60634139f998b\";\r",
+							"var deviceId= \"apple\";\r",
+							"var token = \"db8c4956af0f0f0281f3e0dda9879342dc1f853b\";\r",
+							"// 导入JS库：时间库moment，加密库CryptoJS\r",
+							"const moment = require('moment');\r",
+							"var CryptoJS = require(\"crypto-js\");\r",
+							"// 确定时间戳（以秒为单位的10位整数串，一并发送到请求body中）\r",
+							"var time = moment();\r",
+							"var timeStampStr = parseInt(time.valueOf()/1000).toString();\r",
+							"// 确定计算HMAC-SHA1签名的参数\r",
+							"var userIdHash = CryptoJS.MD5(userId).toString(CryptoJS.enc.Hex);\r",
+							"var key = token.substring(0,6) + userIdHash.substring(0,6);\r",
+							"// 计算签名，密钥为appKey，信息为appId+timeStampStr\r",
+							"var msg = token + timeStampStr\r",
+							"var signature = CryptoJS.HmacSHA1(msg,key).toString(CryptoJS.enc.Hex);\r",
+							"// 将签名传递到请求body\r",
+							"var authToken = userId+\";\"+deviceId+\";\"+token+\";\"+timeStampStr+\";\"+signature;\r",
+							"pm.globals.set(\"authToken\",authToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/synthesis/create_synthesis_record",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"synthesis",
+						"create_synthesis_record"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "提交任务请求",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var userId = \"97f60634139f998b\";\r",
+							"var deviceId= \"apple\";\r",
+							"var token = \"db8c4956af0f0f0281f3e0dda9879342dc1f853b\";\r",
+							"// 导入JS库：时间库moment，加密库CryptoJS\r",
+							"const moment = require('moment');\r",
+							"var CryptoJS = require(\"crypto-js\");\r",
+							"// 确定时间戳（以秒为单位的10位整数串，一并发送到请求body中）\r",
+							"var time = moment();\r",
+							"var timeStampStr = parseInt(time.valueOf()/1000).toString();\r",
+							"// 确定计算HMAC-SHA1签名的参数\r",
+							"var userIdHash = CryptoJS.MD5(userId).toString(CryptoJS.enc.Hex);\r",
+							"var key = token.substring(0,6) + userIdHash.substring(0,6);\r",
+							"// 计算签名，密钥为appKey，信息为appId+timeStampStr\r",
+							"var msg = token + timeStampStr\r",
+							"var signature = CryptoJS.HmacSHA1(msg,key).toString(CryptoJS.enc.Hex);\r",
+							"// 将签名传递到请求body\r",
+							"var authToken = userId+\";\"+deviceId+\";\"+token+\";\"+timeStampStr+\";\"+signature;\r",
+							"pm.globals.set(\"authToken\",authToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"recordId\": 1,\r\n    \"text\": \"你好星期五\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/synthesis/submit_task/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"synthesis",
+						"submit_task",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取结果",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var userId = \"97f60634139f998b\";\r",
+							"var deviceId= \"apple\";\r",
+							"var token = \"db8c4956af0f0f0281f3e0dda9879342dc1f853b\";\r",
+							"// 导入JS库：时间库moment，加密库CryptoJS\r",
+							"const moment = require('moment');\r",
+							"var CryptoJS = require(\"crypto-js\");\r",
+							"// 确定时间戳（以秒为单位的10位整数串，一并发送到请求body中）\r",
+							"var time = moment();\r",
+							"var timeStampStr = parseInt(time.valueOf()/1000).toString();\r",
+							"// 确定计算HMAC-SHA1签名的参数\r",
+							"var userIdHash = CryptoJS.MD5(userId).toString(CryptoJS.enc.Hex);\r",
+							"var key = token.substring(0,6) + userIdHash.substring(0,6);\r",
+							"// 计算签名，密钥为appKey，信息为appId+timeStampStr\r",
+							"var msg = token + timeStampStr\r",
+							"var signature = CryptoJS.HmacSHA1(msg,key).toString(CryptoJS.enc.Hex);\r",
+							"// 将签名传递到请求body\r",
+							"var authToken = userId+\";\"+deviceId+\";\"+token+\";\"+timeStampStr+\";\"+signature;\r",
+							"pm.globals.set(\"authToken\",authToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/synthesis/get_result/?recordId=1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"synthesis",
+						"get_result",
+						""
+					],
+					"query": [
+						{
+							"key": "recordId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

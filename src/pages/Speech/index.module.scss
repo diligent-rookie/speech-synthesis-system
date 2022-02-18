@@ -1,0 +1,52 @@
+.root {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  padding: 48px;
+  :global {
+    .ant-card-body{
+      padding: 0;
+      height: calc(100% - 58px);
+      display: flex;
+      background-color: #F2F1F1;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    }
+   }
+}
+
+.header {
+  height: 48px;
+  line-height: 48px;
+  text-align: right;
+  font-weight: 500;
+}
+
+.card {
+ height: 100%;
+
+ .content {
+   flex:1;
+   padding: 24px;
+   align-self: center;
+  }
+
+  .audioContainer {
+    text-align: right;
+    margin-top: 36px;
+    audio {
+      width: 90%;
+      margin: 0 auto;
+      &::-webkit-media-controls-panel {
+      background-color: rgba(0,0,0,0.05);
+      color: rgba(0,0,0,0.05);
+      }
+    }
+  }
+
+  .gif {
+    flex:1;
+    padding: 24px;
+    background: url('../../static/voice.gif') no-repeat center center;
+    background-size: 90%;
+   }
+}

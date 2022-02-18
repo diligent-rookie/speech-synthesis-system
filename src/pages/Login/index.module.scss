@@ -1,0 +1,77 @@
+
+.root {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background: url('../../static/login_bg_2.jpg') no-repeat center center;
+  background-size: cover;
+}
+.form {
+  display: flex;
+  width: 600px;
+  height: 500px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  border-radius: 15px;
+  background-color: rgba(255,255,255,0.75);
+}
+
+.header {
+  width: 600px;
+  margin-bottom: 24px;
+  // height: 100px;
+  text-align: center;
+}
+
+.title {
+  font-size: 50px;
+  color: #1890ff;
+  font-weight: bold;
+}
+
+.desc {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.word {
+  width: 23em;
+  font-size: 18px;
+  font-style:italic;
+  color: #1890ff;
+  margin: 0 auto;
+  white-space: nowrap;
+  border-right: 2px solid transparent;
+  animation: print 4s steps(23, end) infinite, blink-caret .75s step-end infinite;
+  overflow: hidden;
+}
+
+/* 打印效果 */
+@keyframes print {
+  from { width: 0; }
+  to { width: 23em; }
+}
+/* 光标闪动 */
+@keyframes blink-caret {
+  from, to { box-shadow: 1px 0 0 0 transparent; }
+  50% { box-shadow: 1px 0 0 0; }
+}
+
+.tips {
+  width: 100%;
+  color: rgba(0,0,0,0.75);
+  text-align: center;
+}
+
+.phone {
+  position: relative;
+}
+
+.sendBtn {
+  position: absolute;
+  left: 260px;
+  top: 0;
+}
